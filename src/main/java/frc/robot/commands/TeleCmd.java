@@ -5,7 +5,7 @@ import frc.robot.RobotContainer;
 import frc.robot.commands.gamepad.OI;
 import frc.robot.subsystems.OmniDrive;
 import frc.robot.subsystems.Sensor;
-import frc.robot.subsystems.Arm;
+import java.lang.Math;
 public class TeleCmd extends CommandBase
 {
     /**
@@ -14,17 +14,16 @@ public class TeleCmd extends CommandBase
     private final OmniDrive m_omnidrive;
     private final Sensor m_sensor;
     private final OI m_oi;
-    private final Arm m_arm;
+    
 
     /**
      * Constructor
      */
-    public TeleCmd(OmniDrive omnidrive, OI oi, Arm arm)
+    public TeleCmd(OmniDrive omnidrive, OI oi)
     {
         m_omnidrive = RobotContainer.m_omnidrive;
         m_sensor = RobotContainer.m_sensor;
         m_oi = RobotContainer.m_oi;
-        m_arm = RobotContainer.m_arm;
         addRequirements(m_omnidrive); //add the drive subsystem as a requirement 
 		//addRequirements(m_menu); 
     }
@@ -56,16 +55,30 @@ public class TeleCmd extends CommandBase
         //Get other buttons?
 
         //Add code here to control servo motor etc.
-        m_omnidrive.setMotorOut012(x,y,w);
+        /* 
+        double a[][] = {{ -0.866025, -0.5, 1, 0.1 },
+                        { 1, , 1, 0.1 },
+                        { 2, 1, 1, 7 }};*/
+        double s0, s1, s2;
+        /*
+         * s0 = -Math.sqrt(3)/2*x - 0.5*y + 1*w;
+        s1 = x + 1*w;
+        s2 = Math.sqrt(3)/2*y - 0.5*x + 1*w;
+         */
+        s0 = -0.5*x - Math.sqrt(3)/2*y + 1*w;
+        s1 = x + 1*w;
+        s2 = Math.sqrt(3)/2*y - 0.5*x + 1*w;
+         
+        //m_omnidrive.setMotorOut012(s0,s1,s2);
         double input_start = -1;    // The lowest number of the range input.
         double input_end = 1;    // The largest number of the range input.
         double output_start = 0; // The lowest number of the range output.
         double output_end = 300;  // The largest number of the range output.
         double output = output_start + ((output_end - output_start) / (input_end - input_start)) * (w - input_start);
         //m_sensor.setServoAngle(output);
-        m_arm.setServoAngle0(output);
+    
         
-        //m_omnidrive.setRobotSpeedXYW(x*0.6, y*0.6, w*Math.PI);
+        m_omnidrive.setRobotSpeedXYW(x*0.6, y*0.6, w*Math.PI);
 
     }
 

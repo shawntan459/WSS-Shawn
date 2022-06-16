@@ -32,7 +32,7 @@ public class Sensor extends SubsystemBase
     // Good for debugging
     // Shuffleboard
     private final ShuffleboardTab tab = Shuffleboard.getTab("Sensors");
-    private final NetworkTableEntry D_inputDisp = tab.add("inputDisp", 0).getEntry();
+    private final NetworkTableEntry D_inputDisp = tab.add("inputDisp", false).getEntry();
     private final NetworkTableEntry D_cntDisp = tab.add("cntDisp", 0).getEntry();
     private final NetworkTableEntry D_IRSensor = tab.add("IR Value (cm)", 0).getEntry();
     private final NetworkTableEntry D_Servo = tab.add("Servo", 0).getEntry();
@@ -42,7 +42,7 @@ public class Sensor extends SubsystemBase
         //Constuct a new instance
         
         sharp = new AnalogInput(0);
-        input10 = new DigitalInput(10);
+        input10 = new DigitalInput(Constants.INPUT0);
         servo = new Servo(0);
         servo.setAngle(150);
         
