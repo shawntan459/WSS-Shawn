@@ -2,6 +2,8 @@ package frc.robot.commands.auto;
 
 import java.util.List;
 
+import org.opencv.core.Mat;
+
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
@@ -16,6 +18,7 @@ import frc.robot.RobotContainer;
 // import the commands
 import frc.robot.commands.auto.MoveRobot;
 import frc.robot.commands.auto.RotateTest;
+import frc.robot.subsystems.Sensor;
 
 /**
  * DriveMotor class
@@ -25,14 +28,27 @@ import frc.robot.commands.auto.RotateTest;
 public class AutoMainCmd extends SequentialCommandGroup
 {   
 
+    private final Sensor m_sensor;
 	public AutoMainCmd()
     {
+       
         
         super(
-            new MoveRobot(2, -Math.PI/4, 0, 0, Math.PI),  
-            new MoveRobot(2, Math.PI/4, 0, 0, Math.PI),
-            new LoopCmd(new RotateTest()),
-            new MoveRobot(2, Math.PI/4, 0, 0, Math.PI)
+             
+            new MoveRobot(1, 1, 0, 0,0.4),
+            new MoveRobot(2, Math.PI, 0, 0,Math.PI),
+            new MoveRobot(1, 1, 0, 0,Math.PI),
+            new MoveRobot(2, -Math.PI, 0, 0,Math.PI)
+            //new MoveRobotSense(1, 1, 0, 0, 0.4, )
+            /* 
+            new MoveRobot(0, 0.1, 0, 0,0.4),
+            new MoveRobot(1, -0.1, 0, 0,0.4),  
+            new MoveRobot(0, -0.1, 0, 0,0.4),    
+            new MoveRobot(2, Math.PI*2, 0, 0,Math.PI)  
+            */
+            
+            
              );
+        
     }
 }
