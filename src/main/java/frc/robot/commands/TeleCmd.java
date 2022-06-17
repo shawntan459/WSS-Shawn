@@ -1,11 +1,15 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.commands.gamepad.OI;
+import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.OmniDrive;
 import frc.robot.subsystems.Sensor;
 import java.lang.Math;
+
+import org.ejml.dense.row.MatrixFeatures_CDRM;
 public class TeleCmd extends CommandBase
 {
     /**
@@ -13,17 +17,19 @@ public class TeleCmd extends CommandBase
      */
     private final OmniDrive m_omnidrive;
     private final Sensor m_sensor;
+    private final Arm m_arm;
     private final OI m_oi;
     
 
     /**
      * Constructor
      */
-    public TeleCmd(OmniDrive omnidrive, OI oi)
+    public TeleCmd(OmniDrive omnidrive, OI oi, Arm arm)
     {
         m_omnidrive = RobotContainer.m_omnidrive;
         m_sensor = RobotContainer.m_sensor;
         m_oi = RobotContainer.m_oi;
+        m_arm = RobotContainer.m_arm;
         addRequirements(m_omnidrive); //add the drive subsystem as a requirement 
 		//addRequirements(m_menu); 
     }
@@ -75,7 +81,7 @@ public class TeleCmd extends CommandBase
         double output_start = 0; // The lowest number of the range output.
         double output_end = 300;  // The largest number of the range output.
         double output = output_start + ((output_end - output_start) / (input_end - input_start)) * (w - input_start);
-        //m_sensor.setServoAngle(output);
+        m_arm.setServoAngle0(output);
     
         
         m_omnidrive.setRobotSpeedXYW(x*0.6, y*0.6, w*Math.PI);
