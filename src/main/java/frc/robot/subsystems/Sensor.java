@@ -25,10 +25,10 @@ public class Sensor extends SubsystemBase
     // Sensors
     private final DigitalInput input10;
     private AnalogInput sharp;
-    private Servo servo;
+    
     
     private int i;
-    private double servoAngle;
+    
     // Good for debugging
     // Shuffleboard
     private final ShuffleboardTab tab = Shuffleboard.getTab("Sensors");
@@ -43,8 +43,6 @@ public class Sensor extends SubsystemBase
         
         sharp = new AnalogInput(0);
         input10 = new DigitalInput(Constants.INPUT0);
-        servo = new Servo(0);
-        servo.setAngle(150);
         
     }
 
@@ -54,10 +52,7 @@ public class Sensor extends SubsystemBase
      * 
      * @param degrees degree to set the servo to, range 0° - 300°
      */
-    public void setServoAngle(final double degrees){
-        servoAngle = degrees;
-        servo.setAngle(degrees);
-    }
+    
     public Boolean getSwitch() {
         return input10.get();
     }
@@ -99,6 +94,6 @@ public class Sensor extends SubsystemBase
         D_inputDisp.setBoolean(getSwitch());
         D_cntDisp.setNumber(i);
         D_IRSensor.setNumber(getIRDistance());
-        D_Servo.setDouble(servoAngle);
+        
     }
 }

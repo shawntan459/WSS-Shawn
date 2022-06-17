@@ -1,6 +1,7 @@
 package frc.robot.commands.auto;
 
 import java.util.List;
+import java.util.function.BooleanSupplier;
 
 import org.opencv.core.Mat;
 
@@ -13,13 +14,16 @@ import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile.Constraints;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.RobotContainer;
 // import the commands
 import frc.robot.commands.auto.MoveRobot;
 import frc.robot.commands.auto.MoveRobotSense;
 import frc.robot.commands.auto.RotateTest;
+import frc.robot.commands.auto.MoveRobotSense.end_func;
 import frc.robot.subsystems.Sensor;
+import edu.wpi.first.wpilibj.AnalogInput;
 
 /**
  * DriveMotor class
@@ -44,9 +48,12 @@ public class AutoMainCmd extends SequentialCommandGroup {
                  * new MoveRobot(2, Math.PI*2, 0, 0,Math.PI)
                  */
 
-                //new MoveRobotSense(1, 3, 0, 0.0, 0.5, () -> RobotContainer.m_sensor.getIRDistance() < 20));
-                new MoveDirection();
-                new MoveRobotSense(1, 3, 0, 0.0, 0.5, () -> RobotContainer.m_sensor.getIRDistance() < 20));
-        )
+                // new MoveRobotSense(1, 3, 0, 0.0, 0.5, () ->
+                // RobotContainer.m_sensor.getIRDistance() < 20));
+                new MoveDirection()
+        // new MoveRobotSense(1, 3, 0, 0.0, 0.5, () ->
+        // RobotContainer.m_sensor.getIRDistance() < 20));
+        );
     }
+
 }
