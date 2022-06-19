@@ -20,6 +20,7 @@ import frc.robot.RobotContainer;
 // import the commands
 import frc.robot.commands.auto.MoveRobot;
 import frc.robot.commands.auto.MoveRobotSense;
+import frc.robot.commands.auto.MoveServo;
 import frc.robot.commands.auto.RotateTest;
 import frc.robot.commands.auto.MoveRobotSense.end_func;
 import frc.robot.subsystems.Sensor;
@@ -50,10 +51,10 @@ public class AutoMainCmd extends SequentialCommandGroup {
 
                 // new MoveRobotSense(1, 3, 0, 0.0, 0.5, () ->
                 // RobotContainer.m_sensor.getIRDistance() < 20));
-                new MoveDirection()
-        // new MoveRobotSense(1, 3, 0, 0.0, 0.5, () ->
-        // RobotContainer.m_sensor.getIRDistance() < 20));
-        );
+                // new MoveDirection()
+                // new MoveRobotSense(1, 3, 0, 0.0, 0.5, () ->
+                // RobotContainer.m_sensor.getIRDistance() < 20));
+                new MoveServo(1, 90, 0, 0, 0.4));
     }
 
 }
