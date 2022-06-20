@@ -16,16 +16,18 @@ import frc.robot.commands.auto.MoveRobot;
  */
 public class MoveDirection extends SequentialCommandGroup {
     private enum CommandSelector {
-        ONE, TWO, THREE
+        ONE, TWO, THREE, FOUR
     }
 
     static public CommandSelector selectCmd123() {
-        if (RobotContainer.m_sensor.getIRDistance() < 20)
+
+        if (RobotContainer.m_sensor.getIRDistance() < 10)
             return CommandSelector.ONE;
-        else if (RobotContainer.m_sensor.getIRDistance() > 40)
+        else if (RobotContainer.m_sensor.getIRDistance() > 50)
             return CommandSelector.TWO;
+
         else
-            return CommandSelector.THREE;
+            return CommandSelector.FOUR;
     }
 
     /*
@@ -65,9 +67,9 @@ public class MoveDirection extends SequentialCommandGroup {
                 // Selection command in selectCmd123
                 new SelectCommand(
                         Map.ofEntries(
-                                Map.entry(CommandSelector.ONE, new MoveLeft()),
-                                Map.entry(CommandSelector.TWO, new MoveRight()),
-                                Map.entry(CommandSelector.THREE, new MoveRobot(1, 1, 0, 0, 0.4))),
+                                Map.entry(CommandSelector.ONE, new MoveSqLeft()),
+                                Map.entry(CommandSelector.TWO, new MoveSq())),
                         MoveTest::selectCmd123));
     }
 }
+// Map.entry(CommandSelector.THREE, new MoveRobot(1, 1, 0, 0, 0.4))

@@ -66,7 +66,14 @@ public class MoveServo extends CommandBase {
         // m_goal = new TrapezoidProfile.State(position, endSpeed);
         m_goal = new TrapezoidProfile.State(position, endSpeed);
         // addRequirements(m_drive); // Adds the subsystem to the command
-
+        if ((m_setpoint.position >= m_goal.position) || endCondition()) {
+            // distance reached or end condition met. End the command
+            // This class should be modified so that the profile can end on other conditions
+            // like
+            // sensor value etc.
+            m_arm.setServoAngle0(m_goal.position * m_dir);
+            m_endFlag = true;
+        }
     }
 
     /**
@@ -95,14 +102,6 @@ public class MoveServo extends CommandBase {
         m_setpoint = profile.calculate(dT);
         m_arm.setServoAngle0(m_setpoint.position * m_dir);
 
-        if ((m_setpoint.position >= m_goal.position) || endCondition()) {
-            // distance reached or end condition met. End the command
-            // This class should be modified so that the profile can end on other conditions
-            // like
-            // sensor value etc.
-            m_arm.setServoAngle0(m_goal.position * m_dir);
-            m_endFlag = true;
-        }
         /*
          * D_position.setNumber(m_dir);
          * D_setpoint_position.setNumber(m_setpoint.position*m_dir);

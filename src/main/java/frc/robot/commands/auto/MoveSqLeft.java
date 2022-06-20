@@ -9,12 +9,12 @@ import frc.robot.commands.auto.MoveRobot;;
  * <p>
  * This class creates the inline auto command to drive the motor
  */
-public class MoveSq extends SequentialCommandGroup {
-    public MoveSq() {
+public class MoveSqLeft extends SequentialCommandGroup {
+    public MoveSqLeft() {
         super(
-                new MoveRobot(1, 0.5, 0, 0.01, 0.5),
+                new MoveRobot(0, 0.5, 0, 0.01, 0.5),
                 // new MoveRobot(0, -0.5, 0, 0.01, 0.5),
-                new MoveRobot(1, -0.5, 0, 0.01, 0.5)
+                new MoveRobot(0, -0.5, 0, 0.01, 0.5)
         // new MoveRobot(0, 0.5, 0, 0.01, 0.5)
         );
     }

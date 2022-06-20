@@ -4,74 +4,71 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 //import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
-
-
 /**
  * DriveMotor class
  * <p>
  * This class creates the inline auto command to drive the motor
  */
-public class LoopCmd extends CommandBase
-{
-    //private final static OmniDrive m_drive = RobotContainer.m_omnidrive;
-    static boolean cmdEndFlag;
+public class LoopCmd extends CommandBase {
+    public static boolean cmdEndFlag;
+    // private final static OmniDrive m_drive = RobotContainer.m_omnidrive;
     private int state;
-    private boolean scheduleFlag;
     private boolean m_endFlag;
     private SequentialCommandGroup cmd;
+    private final end_func fn_ptr;
 
-	public LoopCmd(SequentialCommandGroup cmdToRun)
-    {
-        cmd = cmdToRun;
-        //addRequirements(m_drive);
+    // An interface is an abstract class. All methods are not defined.
+    // This interface defines a method that check for the end condition to terminate
+    // this command
+    interface end_func {
+        public boolean endCondition();
     }
+
+    /***
+     * Sets one of the speeds of the robot
+     * <p>
+     * 
+     * @param cmdToRun - SequentialCommandGroup
+     * @param fn       - function that defines end condition for the loop
+     */
+    public LoopCmd(SequentialCommandGroup cmdToRun, end_func fn) {
+        cmd = cmdToRun;
+        fn_ptr = fn;
+
+    }
+
     @Override
-    public void initialize()
-    {
-        state=0;
-        scheduleFlag = true;
+    public void initialize() {
+        state = 0;
         m_endFlag = false;
-        cmdEndFlag = false;
+
         // Globals.debug[0]=Globals.debug[1]=Globals.debug[2]=0;
     }
+
     @Override
-    public void execute()
-    {
-        if (scheduleFlag==true) {
-            //launch command group
-            //CommandScheduler.getInstance().schedule(cmd);
-            cmd.schedule(false);
-            scheduleFlag = false;
-            cmdEndFlag = false;
-            state++;
-        }
-        else {
+    public void execute() {
 
-            if (cmdEndFlag == true) {
-                //command group finished, reset flag
-                state++;
-                scheduleFlag = true;
-
-                //End condition for loopCmd
-                //In this example, the loop ends after 3 times
-                if (state==6)
-                    m_endFlag = true;
-
+        if (cmd.isScheduled() == false) {
+            // End condition for loopCmd
+            if (fn_ptr.endCondition()) {
+                m_endFlag = true;
+            } else {
+                // schedule command
+                cmd.schedule(false);
             }
         }
-        // Globals.debug[0] = state;
+
     }
 
     @Override
-    public boolean isFinished()
-    {
+    public boolean isFinished() {
         // if (m_endFlag)
-        //     Globals.debug[2] = -1;
+        // Globals.debug[2] = -1;
         return m_endFlag;
     }
+
     @Override
-    public void end(boolean interrupted)
-    {
+    public void end(boolean interrupted) {
         // Globals.debug[1] = -1;
     }
 }

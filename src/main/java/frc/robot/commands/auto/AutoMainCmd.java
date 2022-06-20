@@ -37,11 +37,13 @@ public class AutoMainCmd extends SequentialCommandGroup {
 
         super(
 
-                // new MoveRobot(1, 1, 0, 0,0.4),
+                // new MoveRobot(1, 0.5, 0, 0,0.4),
+
                 // new MoveRobot(2, Math.PI, 0, 0,Math.PI),
                 // new MoveRobot(1, 1, 0, 0,Math.PI),
                 // new MoveRobot(2, -Math.PI, 0, 0,Math.PI)
-                // new MoveRobotSense(1, 1, 0, 0, 0.4, )
+                // new MoveRobotSense(1, 0.5, 0, 0.0, 0.5, () ->
+                // RobotContainer.m_sensor.getIRDistance() < 10),
                 /*
                  * new MoveRobot(0, 0.1, 0, 0,0.4),
                  * new MoveRobot(1, -0.1, 0, 0,0.4),
@@ -54,7 +56,15 @@ public class AutoMainCmd extends SequentialCommandGroup {
                 // new MoveDirection()
                 // new MoveRobotSense(1, 3, 0, 0.0, 0.5, () ->
                 // RobotContainer.m_sensor.getIRDistance() < 20));
-                new MoveServo(1, 90, 0, 0, 0.4));
+                // new MoveServo(0, 0, 0, 100),
+                // new MoveServo(0,0, 0, 100),
+                // new MoveServo(180, 0, 0, 100), // Does not go to -180 even though on
+                // shuffleboard it says so
+                // new MoveServo(0, 0, 0, 0),
+                new MoveRobot(1, 0.5, 0, 0, 0.4),
+                new LoopCmd(new MoveTest(), () -> RobotContainer.m_sensor.getSwitch() == false),
+                new MoveRobot(1, -0.5, 0, 0, 0.4));
+
     }
 
 }
